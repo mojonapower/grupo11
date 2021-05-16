@@ -12,10 +12,10 @@ export const Login = () => {
 	const [mensaje, setmensaje] = useState("");
 	const { store, actions } = useContext(Context);
 	const { islogin } = store;
-	const { setLogin } = actions;
+	const { setisLogin } = actions;
 	const url_api = process.env.BACKEND_URL + "/api/login";
 
-	//funcion de legeo
+	//funcion de legueo
 	const handleSubmit = e => {
 		e.preventDefault();
 
@@ -36,11 +36,9 @@ export const Login = () => {
 			.then(res => res.json())
 			.then(data => {
 				let token = data.token;
-				//console.log(token);
 				if (token) {
 					sessionStorage.setItem("my_token", token);
-					setLogin(true);
-					console.log("login es ", islogin);
+					setisLogin(true);
 
 					//alerta si fue exitosa
 					swal({
@@ -57,7 +55,7 @@ export const Login = () => {
 						button: "Aceptar"
 					});
 
-					setLogin(false);
+					setisLogin(false);
 				}
 
 				// let token = sessionStorage.getItem("my_token")

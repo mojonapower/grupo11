@@ -12,7 +12,7 @@ export const Contact = () => {
 	useEffect(() => {
 		getempresainfo();
 	}, []);
-	console.log(dataempresa);
+	//console.log(dataempresa);
 
 	return (
 		<div className="container contactcus">

@@ -1,4 +1,7 @@
 import React from "react";
+//import React , { useContext } from "react";
+//import { Context } from "./store/appContext";
+
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -25,6 +28,9 @@ import { Misclasescreadas } from "./pages/clasescreadas";
 import { Updateclass } from "./pages/updateclass";
 import { Tienda } from "./pages/tienda";
 
+/* const { store, actions } = useContext(Context);
+	const { islogin } = store;
+ */
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain

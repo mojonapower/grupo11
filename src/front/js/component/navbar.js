@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
@@ -6,7 +6,8 @@ import { Context } from "../store/appContext";
 export const Navbar1 = () => {
 	const { store, actions } = useContext(Context);
 	const { islogin } = store;
-	const { setLogin } = actions;
+	const { setisLogin } = actions;
+	console.log("esta loging", islogin);
 
 	return (
 		<div className="container navpad">
@@ -28,7 +29,7 @@ export const Navbar1 = () => {
 							<Button
 								variant="primary buttonspace"
 								onClick={() => {
-									setLogin(false);
+									setisLogin(false);
 									swal({
 										title: "Sesion Cerrada!",
 										text: "Ha cerrado sesion correctamente",

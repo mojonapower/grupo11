@@ -5,8 +5,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//classRegistration: [],
 			//classParticipants: [],
 			token: [],
-			login: false,
+			//login: false,
 			islogin: false,
+
 			dataempresa: {
 				CELULAR: "9999 8888",
 				DESCRIPCION: "del palo de cas 500 varas",
@@ -33,7 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			clasesdisponibles: [
-				{
+				/* {
 					DESCRIPCION: "conozca las ultimas tecnicas sagradas de kami",
 					DIA_SEMANA: "Miercoles",
 					DURACION: 60,
@@ -48,10 +49,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					LUGAR: "templo sagrada kamizama",
 					NOMBRE: "kempo",
 					PRECIO: 0
-				}
+				} */
 			],
 			misclasesreservadas: [
-				{
+				/* {
 					DESCRIPCION: "conozca las ultimas tecnicas sagradas de kami",
 					DIA_SEMANA: "Miercoles",
 					DURACION: 60,
@@ -66,7 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					LUGAR: "templo sagrada kamizama",
 					NOMBRE: "kempo",
 					PRECIO: 0
-				}
+				} */
 			],
 			articulos: [],
 			imagen: [
@@ -102,14 +103,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (status > 200) alert("error: " + status);
 			},
 
-			/* updateClassRegistration: (newClass, horaIni) => {
-				console.log("primera clase", newClass);
-				const store = getStore();
-				const actions = getActions();
-				//store.classRegistration.push(newClass);
-				actions.updateClassRegistrationApi(newClass.horaIni);
-			},
- */
 			nombreDelDiaSegunFecha: fecha => {
 				const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
 				return dias[fecha.getDay()];
@@ -134,10 +127,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fechaInicio = new Date(fechaInicio); */
 				const dia = actions.nombreDelDiaSegunFecha(fechaInicio);
 				var myHeaders = new Headers();
-				/* myHeaders.append(
-					"Authorization",
-					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMDQzMTE5OCwianRpIjoiZDllYjU1NDAtZTU4MS00NTk4LWE3NzYtMDkzOTM3NWM2ZDEzIiwibmJmIjoxNjIwNDMxMTk4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxLCJleHAiOjE2MjA0MzIwOTh9.thRcfOORtgkTarTFo6AbBmGGpVmC9eWZIMWcg_9rCbo"
-				); */
+
 				myHeaders.append("Content-Type", "application/json");
 				const jsonClase = {
 					NOMBRE: Class.nombreClase,
@@ -154,17 +144,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					FOTO: "..//fotos/actividad_kempo.jpg",
 					EMPRESA_ID: 1 // por el momento es solo una empresa se debe cambiar a variable de empresa
 				};
-				console.log("ruta", process.env.BACKEND_URL);
-				console.log("jsonClase", jsonClase);
+
 				fetch(process.env.BACKEND_URL + "/api/clases", {
 					method: "POST",
 					body: JSON.stringify(jsonClase),
 					headers: myHeaders
 				})
 					.then(resp => {
-						console.log("respuesta SubirClase ", resp.ok); // will be true if the response is successfull
-						console.log("status SubirClase", resp.status); // the status code = 200 or code = 400 etc.
-						console.log("texto SubirClase", resp.text()); // will try return the exact result as string
+						//console.log("respuesta SubirClase ", resp.ok); // will be true if the response is successfull
+						//console.log("status SubirClase", resp.status); // the status code = 200 or code = 400 etc.
+						//console.log("texto SubirClase", resp.text()); // will try return the exact result as string
 						return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
 					})
 					.then(data => setStore({ message: data.msg }))
@@ -188,9 +177,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: myHeaders
 				})
 					.then(resp => {
-						/* console.log("respuesta MatricularClase ", resp.ok);
-						console.log("status MatricularClase", resp.status);
-						console.log("texto MatricularClase", resp.text()); */
 						actions.ErrorApi(resp.status);
 						return resp.json();
 					})
@@ -243,9 +229,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			setLogin: loggin => {
+			/* setLogin: loggin => {
 				const store = getStore();
+				console.log("me llamaron para cambiar el loggin", loggin);
+				console.log("el estado antes de cambio", store.islogin);
 				setStore({ islogin: loggin });
+            }, */
+
+			setisLogin: loggin => {
+				const store = getStore();
+
+				console.log("me llamaron para cambiar el loggin AL ESTADO:", loggin);
+				console.log("el estado antes de cambio DE ISLOGIN ES", store.islogin);
+
+				setStore({ islogin: loggin });
+				console.log("el estado DESPUES de cambio DE ISLOGIN ES", store.islogin);
 			},
 
 			getempresainfo: () => {
@@ -264,7 +262,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getmisclasesreservadas: () => {
 				const token = sessionStorage.getItem("my_token");
-				console.log("entré");
+
 				let myHeaders = new Headers();
 				const jsonClase = "";
 				myHeaders.append("Authorization", "Bearer " + token);
@@ -363,9 +361,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						actions.getclases();
 					})
 					.catch(err => console.log(err));
-
 			},
-      getarticulosmerclib: () => {
+			getarticulosmerclib: () => {
 				fetch("https://api.mercadolibre.com/categories/MLA438176", {
 					method: "GET"
 					//body: JSON.stringify(jsonClase),
@@ -375,7 +372,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ articulos: data.children_categories });
 					})
 					.catch(error => console.log("Error loading message from backend", error));
-      }
+			}
 		}
 	};
 };

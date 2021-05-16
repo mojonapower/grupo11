@@ -478,8 +478,15 @@ def deletereservedclass(id):
     current_id = get_jwt_identity()
     clases_usuario = Actividades_Participantes.query.filter_by(PERSONA_ID=current_id, ACTIVIDAD_ID=id).first()
     db.session.delete(clases_usuario)
-    db.session.commit()    
-    return jsonify("successfully deleted"), 200
+    db.session.commit() 
+    actividad=Actividades.query.filter_by(ACTIVIDAD_ID=id).first()        
+    if not actividad:
+        return jsonify({"msg": "Actividad Not Found"}), 401
+    else:
+        actividad.ACTIVIDAD_ESPACIOS_DISPONIBLES+=1
+        db.session.commit()
+        return jsonify({"msg": "successfully deleted"}), 200   
+    #return jsonify("successfully deleted"), 200
 
 
 # ejemplo de test de token
